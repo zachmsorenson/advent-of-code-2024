@@ -4,11 +4,6 @@ pub mod utils;
 
 use solution::{print_table, Solution};
 
-// #[derive(Debug)]
-// struct Args {
-//     day: Option<u32>,
-// }
-
 fn main() {
     let solutions = solution::all_solutions();
     let mut all_results = Vec::new();
