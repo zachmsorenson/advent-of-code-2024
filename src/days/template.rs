@@ -1,14 +1,16 @@
-pub fn parse_input(input: &str) -> &str {
+pub struct Input {}
+
+pub fn parse_input(input: &str) -> Input {
     input
 }
 
 #[allow(unused_variables)]
-pub fn part1(input: &str) -> Option<u64> {
+pub fn part1(input: &Input) -> Option<u64> {
     None
 }
 
 #[allow(unused_variables)]
-pub fn part2(input: &str) -> Option<u64> {
+pub fn part2(input: &Input) -> Option<u64> {
     None
 }
 
@@ -20,7 +22,7 @@ pub mod tests {
     fn test_day00_part1() {
         let input = parse_input(TEST_INPUT);
 
-        let resp = part1(input);
+        let resp = part1(&input);
 
         assert_eq!(resp, None);
     }
