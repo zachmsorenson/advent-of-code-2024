@@ -123,8 +123,6 @@ pub fn part1(input: &Input) -> Option<u64> {
         }
     }
 
-    // grid.iter().for_each(|v| println!("{:?}", v));
-
     Some(sum)
 }
 
@@ -135,15 +133,9 @@ pub fn backtrack(start: Position, grid: &[Vec<char>]) -> u64 {
     let mut curr = start;
     let mut turns = HashSet::new();
 
-    // grid.iter().for_each(|v| println!("{:?}", v));
-
     let mut step = curr.direction.step();
     let mut next = (curr.x + step.0, curr.y + step.1);
 
-    // println!(
-    //     "starting backtrack with start={:?}, curr={:?}, step={:?}, next={:?}",
-    //     start, curr, step, next
-    // );
     loop {
         while (0..num_rows).contains(&(next.1 as usize))
             && (0..num_cols).contains(&(next.0 as usize))
@@ -158,14 +150,11 @@ pub fn backtrack(start: Position, grid: &[Vec<char>]) -> u64 {
             .get(next.1 as usize)
             .and_then(|row| row.get(next.0 as usize));
 
-        // println!("checking @ (x,y)=({},{})", next.0, next.1);
         match c {
             Some('#') => {
                 // println!("found obstacle @ (x,y)=({},{})", next.0, next.1);
                 let new_turn = turns.insert((curr.x, curr.y, curr.direction.to_char()));
                 if !new_turn {
-                    // println!("\tfound loop");
-                    // println!("\tvisited: {:?}", turns);
                     return 1;
                 }
 
@@ -174,8 +163,6 @@ pub fn backtrack(start: Position, grid: &[Vec<char>]) -> u64 {
                 next = (curr.x + step.0, curr.y + step.1);
             }
             None => {
-                // println!("\texited");
-                // println!("\tvisited: {:?}", turns);
                 return 0;
             }
             Some(_) => {
@@ -241,64 +228,6 @@ pub fn part2(input: &Input) -> Option<u64> {
         }
     }
 
-    // let mut sum = 0;
-    // for i in 0..num_rows {
-    //     for j in 0..num_cols {
-    //         // Init subrun. Skip starting position and existing obstacles
-    //         if (i == input.start.y as usize && j == input.start.x as usize)
-    //             || input.input[input.start.y as usize][input.start.x as usize] == '#'
-    //         {
-    //             continue;
-    //         }
-    //
-    //         let mut grid = input.input.clone();
-    //         let mut curr = input.start;
-    //         grid[i][j] = '#';
-    //
-    //         loop {
-    //             if grid[curr.y as usize][curr.x as usize] == curr.direction.to_char() {
-    //                 sum += 1;
-    //                 break;
-    //             }
-    //
-    //             grid[curr.y as usize][curr.x as usize] = curr.direction.to_char();
-    //
-    //             let step = Direction::step(&curr.direction);
-    //             let next = (curr.x + step.0, curr.y + step.1);
-    //
-    //             let c: Option<&char> = grid
-    //                 .get(next.1 as usize)
-    //                 .and_then(|row| row.get(next.0 as usize));
-    //
-    //             match c {
-    //                 Some('#') => {
-    //                     curr.direction = Direction::turn(&curr.direction);
-    //                 }
-    //                 Some('.') => {
-    //                     grid[curr.y as usize][curr.x as usize] = curr.direction.to_char();
-    //                     (curr.x, curr.y) = (next.0, next.1);
-    //                 }
-    //                 Some(ch) => {}
-    //                 None => {
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // let mut sum = 0;
-    // input.input.iter().map(|row| {
-    //     row.iter()
-    //         .filter_map(|c| {
-    //             let mut grid = input.input.clone();
-    //             let mut curr = input.start;
-    //         })
-    //         .sum()
-    // });
-
-    // grid.iter().for_each(|v| println!("{:?}", v));
-
-    // None
     Some(sum)
 }
 

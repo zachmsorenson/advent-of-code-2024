@@ -1,3 +1,5 @@
+use rayon::prelude::*;
+
 #[derive(Debug)]
 pub enum Operator {
     Add(u64),
@@ -105,18 +107,22 @@ pub fn part1(input: &Input) -> Option<u64> {
 
 #[allow(unused_variables)]
 pub fn part2(input: &Input) -> Option<u64> {
-    let mut sum = 0;
+    let sum = input
+        .equations
+        .par_iter()
+        .map(|eq| {
+            let target = eq.result;
 
-    for equation in &input.equations {
-        let target = equation.result;
+            let mut accs = vec![eq.numbers[0]];
+            let nums = &eq.numbers[1..];
 
-        let mut accs = vec![equation.numbers[0]];
-        let nums = &equation.numbers[1..];
-
-        if backtrack(target, &mut accs, nums, true) {
-            sum += equation.result;
-        }
-    }
+            if backtrack(target, &mut accs, nums, true) {
+                eq.result
+            } else {
+                0
+            }
+        })
+        .sum();
 
     Some(sum)
 }
